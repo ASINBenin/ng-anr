@@ -323,6 +323,13 @@
           hasRiskOwnerRole: roles.indexOf('risk_owner') !== -1,
           hasResidualRiskApproverRole: roles.indexOf('residual_risk_approver') !== -1
         };
+      }).catch(function() {
+        $scope.risksManagementAccess = {
+          visible: false,
+          supervisor: null,
+          hasRiskOwnerRole: false,
+          hasResidualRiskApproverRole: false
+        };
       });
     };
 
@@ -1105,7 +1112,7 @@
 
     $scope.updateModel = function(justCore, cb) {
       isModelLoading = true;
-      let defaultLanguageIndex = UserService.getDataLanguage();
+      let defaultLanguageIndex = (UserService.getDataLanguage && UserService.getDataLanguage()) || (UserService.getUiLanguage && UserService.getUiLanguage()) || 1;
       if ($scope.OFFICE_MODE == 'BO') {
         ModelService.getModel($stateParams.modelId).then(function(data) {
           $scope.model = data;
