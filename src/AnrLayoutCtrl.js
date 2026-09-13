@@ -67,6 +67,16 @@
               anrSelectedTabIndex: 6
             };
             break;
+          case 'main.project.anr.signatureList':
+          case 'main.project.anr.signatures':
+          case 'main.project.anr.signatureProcess':
+          case 'main.project.anr.signatureCallback':
+          case 'main.project.anr.signatureSetup':
+            $scope.display = {
+              show_hidden_impacts: false,
+              anrSelectedTabIndex: 7
+            };
+            break;
         }
       }
     } else {
@@ -75,6 +85,28 @@
         anrSelectedTabIndex: 0
       };
     }
+
+    var tabStateNames = [
+      'main.project.anr',
+      'main.project.anr.dashboard',
+      'main.project.anr.scales',
+      'main.project.anr.knowledge',
+      'main.project.anr.ropa',
+      'main.project.anr.soa',
+      'main.project.anr.soa.sheet',
+      'main.project.anr.signatures'
+    ];
+
+    $scope.$watch('display.anrSelectedTabIndex', function(newVal, oldVal) {
+      if (newVal !== undefined && newVal !== null && $scope.OFFICE_MODE === 'FO') {
+        var targetState = tabStateNames[newVal];
+        if (targetState && $scope.model && $scope.model.anr && $scope.model.anr.id) {
+          if ($state.current.name !== targetState && $state.current.name.indexOf('main.project.anr.signature') !== 0) {
+            $state.go(targetState, { modelId: $scope.model.anr.id }, { location: true, notify: false });
+          }
+        }
+      }
+    });
 
     var self = this;
     var reviewFrequencyValues = [
@@ -3596,7 +3628,7 @@
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'));
 
       $mdDialog.show({
-        controller: ['$scope', '$mdDialog', '$http', 'anr', 'step', MethodDeliverableDialog],
+        controller: ['$scope', '$mdDialog', '$http', '$injector', 'anr', 'step', MethodDeliverableDialog],
         templateUrl: 'views/anr/deliverable.evalcontext.html',
         preserveScope: false,
         scope: $scope.$dialogScope.$new(),
@@ -3607,6 +3639,7 @@
           step: step,
         }
       }).then(function(deliverable) {
+        if (!deliverable) return;
         $http.post('api/client-anr/' + $scope.model.anr.id + '/deliverable', deliverable, {
           responseType: "arraybuffer"
         }).then(function(data) {
@@ -6422,7 +6455,7 @@
     };
   }
 
-  function MethodDeliverableDialog($scope, $mdDialog, $http, anr, step) {
+  function MethodDeliverableDialog($scope, $mdDialog, $http, $injector, anr, step) {
     $scope.step = step;
     $scope.deliverable = {
       'version': '',
@@ -6459,7 +6492,14 @@
 
     $scope.save = function() {
       $mdDialog.hide($scope.deliverable);
-    }
+    };
+
+    $scope.prepareSignature = function(deliverable) {
+      $mdDialog.cancel();
+      var target = deliverable || $scope.deliverable;
+      var SignatureRequestService = $injector.get('SignatureRequestService');
+      SignatureRequestService.initiateSignatureForDeliverable(target, anr.id);
+    };
 
     $scope.cancel = function() {
       $mdDialog.cancel();
