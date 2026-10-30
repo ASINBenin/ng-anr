@@ -1204,7 +1204,7 @@
           $scope.rolfBrut = {
             show: $scope.model.showRolfBrut == 1 ? true : false
           }
-          $scope.isAnrReadOnly = (data.rwd == 0);
+          $scope.isAnrReadOnly = (data.rwd == 0 || data.campaignClosed == 1);
           $scope.languages = ConfigService.getLanguages();
           $scope.scales.language = language;
           $scope.opRisksScales = {
@@ -4782,7 +4782,8 @@
 
     $scope.updateScales = function() {
       AnrService.getScales($scope.model.anr.id).then(function(data) {
-        $scope.scalesCanChange = data.canChange && $scope.model.anr.cacheModelAreScalesUpdatable;
+        $scope.scalesCanChange = data.canChange && $scope.model.anr.cacheModelAreScalesUpdatable
+          && !$scope.model.anr.campaignLocked;
         $scope.scaleThreat = ''; // Reset tooltip Prob. on table risks
         $scope.scaleVul = ''; // Reset tooltip Qualif. on table risks
         for (var i = 0; i < data.scales.length; ++i) {
