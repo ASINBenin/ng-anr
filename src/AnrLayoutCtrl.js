@@ -1143,6 +1143,7 @@
           $scope.model = data;
           $rootScope.anr_id = data.anr.id;
           $scope.isAnrReadOnly = false;
+          $scope.isStructureReadOnly = false;
           $scope.languages = ConfigService.getLanguages();
           $scope.opRisksScales = {
             language: defaultLanguageIndex
@@ -1205,6 +1206,8 @@
             show: $scope.model.showRolfBrut == 1 ? true : false
           }
           $scope.isAnrReadOnly = (data.rwd == 0 || data.campaignClosed == 1);
+          // In a campaign only the evaluations can change: the structure (assets, knowledge base, context...) is locked
+          $scope.isStructureReadOnly = $scope.isAnrReadOnly || data.campaignLocked == 1;
           $scope.languages = ConfigService.getLanguages();
           $scope.scales.language = language;
           $scope.opRisksScales = {

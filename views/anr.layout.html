@@ -17,6 +17,14 @@
             </div>
         </div>
 
+        <md-card class="main-card" ng-if="OFFICE_MODE == 'FO' && model.anr.campaignLocked == 1">
+            <md-card-content layout="row" layout-align="start center">
+                <md-icon>lock</md-icon>
+                <span ng-if="model.anr.campaignClosed != 1" translate>This analysis belongs to a campaign: only the evaluations (risks, consequences, recommendations) can be modified.</span>
+                <span ng-if="model.anr.campaignClosed == 1" translate>The campaign is closed: this analysis can no longer be modified.</span>
+            </md-card-content>
+        </md-card>
+
         <md-card class="main-card">
             <div ng-include="'views/anr/_anr.infosnapshot.html'"></div>
             <div class="anr-assignments-panel" layout="row" layout-align="start center" ng-if="isRiskAnalysisView() && hasCurrentUserAssignmentsPanel()">

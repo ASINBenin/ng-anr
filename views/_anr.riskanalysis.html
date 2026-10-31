@@ -28,7 +28,7 @@
                     <md-icon ng-if="!anr_instance_tree_is_patching">home</md-icon> &nbsp; <span>{{ model.anr.label }}</span> <span flex></span>
                 </md-button>
 
-                <div class="angular-ui-tree" ui-tree="insTreeCallbacks" data-drag-delay="150" id="insTree">
+                <div class="angular-ui-tree" ui-tree="insTreeCallbacks" data-drag-enabled="!isStructureReadOnly" data-drag-delay="150" id="insTree">
                     <div layout="row" layout-align="center center" ng-if="!anr_obj_instances_data">
                         <md-progress-circular md-diameter="24"></md-progress-circular>
                     </div>
@@ -52,7 +52,7 @@
                         <md-icon>search</md-icon>
                         <input type="text" ng-model="filter.library" placeholder="{{ 'Search an asset...' | translate }}">
                     </md-input-container>
-                    <md-button ng-if="!isAnrReadOnly" class="md-icon-button md-primary" ng-click="addObject($event)">
+                    <md-button ng-if="!isStructureReadOnly" class="md-icon-button md-primary" ng-click="addObject($event)">
                         <md-tooltip md-direction="right">
                             {{ 'Add an asset' | translate }}
                         </md-tooltip>
@@ -60,7 +60,7 @@
                     </md-button>
                 </div>
 
-                <div ng-hide="uiState.hideLibrary" class="angular-ui-tree" id="libTree" ui-tree="libTreeCallbacks" data-drag-delay="150" style="background:white; z-index: 15; min-height: 500px">
+                <div ng-hide="uiState.hideLibrary" class="angular-ui-tree" id="libTree" ui-tree="libTreeCallbacks" data-drag-enabled="!isStructureReadOnly" data-drag-delay="150" style="background:white; z-index: 15; min-height: 500px">
                     <div layout="row" layout-align="center center" ng-if="!anr_obj_library_data">
                         <md-progress-circular md-diameter="24"></md-progress-circular>
                     </div>
