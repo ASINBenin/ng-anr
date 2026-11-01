@@ -30,7 +30,7 @@
                         Impact evaluation (severity of consequences):
                     </span> [
                     <span class="text-blue"
-                        edit-readonly="isAnrReadOnly"
+                        edit-readonly="isStructureReadOnly"
                         edit-canchange="scalesCanChange"
                         edit-min="0"
                         edit-max="{{scales.impacts.max - 1}}"
@@ -38,7 +38,7 @@
                         edit-type="number">
                     </span> -
                     <span class="text-blue"
-                        edit-readonly="isAnrReadOnly"
+                        edit-readonly="isStructureReadOnly"
                         edit-canchange="scalesCanChange"
                         edit-min="{{scales.impacts.min + 1}}"
                         edit-max="20"
@@ -55,7 +55,7 @@
                 <div>
                     <md-button
                         class="md-icon-button md-primary"
-                        ng-if="!isAnrReadOnly"
+                        ng-if="!isStructureReadOnly"
                         ng-click="addInformationRiskScales()">
                         <md-tooltip md-direction="left">
                             {{ 'Add scales' | translate }}
@@ -63,7 +63,7 @@
                         <md-icon>add_to_photos</md-icon>
                     </md-button>
                     <md-button
-                        ng-if="!isAnrReadOnly && (scalesCanChange || OFFICE_MODE == 'BO') && (scales_types | filter:{type:'CUS'}).length >= 1"
+                        ng-if="!isStructureReadOnly && (scalesCanChange || OFFICE_MODE == 'BO') && (scales_types | filter:{type:'CUS'}).length >= 1"
                         class="md-icon-button md-warn"
                         ng-click="deleteInformationRiskScales()">
                         <md-tooltip md-direction="left">
@@ -104,13 +104,13 @@
                                         type.type != 'D'"
                                     edit-model="type">
                                     <p class="text-blue"
-                                        edit-readonly="isAnrReadOnly"
+                                        edit-readonly="isStructureReadOnly"
                                         edit-field edit-ng-field="'label' + scales.language"
                                         edit-placeholder="{{ 'Click here to type...' | translate }}"
                                         edit-type="textarea">
                                     </p>
                                     <md-button class="md-icon-button md-primary"
-                                        ng-if="!isAnrReadOnly && (scalesCanChange || OFFICE_MODE == 'BO')"
+                                        ng-if="!isStructureReadOnly && (scalesCanChange || OFFICE_MODE == 'BO')"
                                         ng-click="setImpactVisibility(type.id, !!type.isHidden)">
                                         <md-icon>{{ type.isHidden ? 'visibility_off' : 'visibility' }}</md-icon>
                                     </md-button>
@@ -126,7 +126,7 @@
                             ng-class="{'big-border-right': type.type == 'D'}"
                             ng-show="!type.isHidden || display.show_hidden_impacts"
                             ng-repeat="type in scales_types"
-                            edit-readonly="isAnrReadOnly"
+                            edit-readonly="isStructureReadOnly"
                             edit-field edit-ng-field="'comment' + scales.language"
                             edit-localmodel="comms.impact[i][type.id]"
                             edit-type="textarea">
@@ -137,12 +137,12 @@
             </div>
 
             <div editable callback="onThreatScaleChanged" layout="row">
-                <h4 ng-if="(OFFICE_MODE == 'BO' || scalesCanChange) && !isAnrReadOnly" edit-model="scales.threats">
+                <h4 ng-if="(OFFICE_MODE == 'BO' || scalesCanChange) && !isStructureReadOnly" edit-model="scales.threats">
                     <span translate>Likelihood scale:</span> [
                     <span class="text-blue" edit-field="min"></span> -
                     <span class="text-blue" edit-field="max"></span> ]
                 </h4>
-                <h4 ng-if="(OFFICE_MODE == 'FO' && !scalesCanChange ) || isAnrReadOnly">
+                <h4 ng-if="(OFFICE_MODE == 'FO' && !scalesCanChange ) || isStructureReadOnly">
                     <span translate>Likelihood scale:</span> [
                     <span class="text-blue">{{ scales.threats.min }}</span> -
                     <span class="text-blue">{{ scales.threats.max }}</span> ]
@@ -156,7 +156,7 @@
                     <li ng-repeat="i in range(scales.threats.min, scales.threats.max)">
                         {{i}}.
                         <span edit-field edit-ng-field="'comment' + scales.language"
-                            edit-readonly="isAnrReadOnly"
+                            edit-readonly="isStructureReadOnly"
                             edit-type="textarea"
                             edit-class="preserve-newlines"
                             edit-localmodel="comms.threat[i]"
@@ -167,12 +167,12 @@
             </div>
 
             <div editable callback="onVulnScaleChanged" layout="row">
-                <h4 ng-if="(OFFICE_MODE == 'BO' || scalesCanChange) && !isAnrReadOnly" edit-model="scales.vulns">
+                <h4 ng-if="(OFFICE_MODE == 'BO' || scalesCanChange) && !isStructureReadOnly" edit-model="scales.vulns">
                     <span translate>Vulnerabilities scale:</span> [
                     <span class="text-blue" edit-field="min"></span> -
                     <span class="text-blue" edit-field="max"></span> ]
                 </h4>
-                <h4 ng-if="(OFFICE_MODE == 'FO' && !scalesCanChange ) || isAnrReadOnly">
+                <h4 ng-if="(OFFICE_MODE == 'FO' && !scalesCanChange ) || isStructureReadOnly">
                     <span translate>Vulnerabilities scale:</span> [
                     <span class="text-blue">{{ scales.vulns.min }}</span> -
                     <span class="text-blue">{{ scales.vulns.max }}</span> ]
@@ -187,7 +187,7 @@
                         {{i}}.
                         <span edit-field edit-ng-field="'comment' + scales.language"
                             edit-type="textarea"
-                            edit-readonly="isAnrReadOnly"
+                            edit-readonly="isStructureReadOnly"
                             edit-class="preserve-newlines"
                             edit-localmodel="comms.vuln[i]"
                             edit-placeholder="{{ 'Click here to type...' | translate }}">
@@ -203,7 +203,7 @@
                         <div layout="row" layout-align="start center">
                             <div class="anr-scales-demo-block green" flex></div>
                             <md-input-container>
-                                <input ng-disabled="isAnrReadOnly"
+                                <input ng-disabled="isStructureReadOnly"
                                     type="number"
                                     name="thresholds_min"
                                     min="0"
@@ -224,7 +224,7 @@
                         <div layout="row" layout-align="start center">
                             <div class="anr-scales-demo-block orange"></div>
                             <md-input-container>
-                                <input ng-disabled="isAnrReadOnly"
+                                <input ng-disabled="isStructureReadOnly"
                                     type="number"
                                     name="thresholds_max"
                                     min="{{ thresholds.thresholds.min }}"
@@ -314,7 +314,7 @@
                 <h4 edit-model="opRiskScales.impacts">
                     <span translate>Impact evaluation (severity of consequences):</span>&nbsp;
                     <span class="text-blue"
-                        edit-readonly="isAnrReadOnly"
+                        edit-readonly="isStructureReadOnly"
                         edit-canchange="scalesCanChange"
                         edit-min="1"
                         edit-max="20"
@@ -329,14 +329,14 @@
                 <md-switch ng-model="display.show_hidden_opRisks_impacts">{{ 'Show hidden impacts' | translate }}</md-switch>
                 <div>
                     <md-button class="md-icon-button md-primary"
-                        ng-if="!isAnrReadOnly"
+                        ng-if="!isStructureReadOnly"
                         ng-click="addOperationalRiskScales()">
                         <md-tooltip md-direction="left">
                             {{ 'Add scales' | translate }}
                         </md-tooltip>
                         <md-icon>add_to_photos</md-icon>
                     </md-button>
-                    <md-button ng-if="!isAnrReadOnly && (scalesCanChange || OFFICE_MODE == 'BO') && opRiskImpactScales.length >= 1"
+                    <md-button ng-if="!isStructureReadOnly && (scalesCanChange || OFFICE_MODE == 'BO') && opRiskImpactScales.length >= 1"
                         class="md-icon-button md-warn"
                         ng-click="deleteOperationalRiskScales()">
                         <md-tooltip md-direction="left">
@@ -357,13 +357,13 @@
                                 ng-repeat="scale in opRiskImpactScales">
                                 <div layout="row" edit-model="scale">
                                     <p class="text-blue"
-                                        edit-readonly="isAnrReadOnly"
+                                        edit-readonly="isStructureReadOnly"
                                         edit-field="label"
                                         edit-placeholder="{{ 'Click here to type...' | translate }}"
                                         edit-type="textarea">
                                     </p>
                                     <md-button class="md-icon-button md-primary"
-                                        ng-if="!isAnrReadOnly && (scalesCanChange || OFFICE_MODE == 'BO') && ((opRiskImpactScales | filter:{isHidden:false}).length > 1 || display.show_hidden_opRisks_impacts)"
+                                        ng-if="!isStructureReadOnly && (scalesCanChange || OFFICE_MODE == 'BO') && ((opRiskImpactScales | filter:{isHidden:false}).length > 1 || display.show_hidden_opRisks_impacts)"
                                         ng-click="onEditOpRiskScale(scale.id, 'isHidden', !scale.isHidden)">
                                         <md-icon>{{ scale.isHidden ? 'visibility_off' : 'visibility' }}</md-icon>
                                     </md-button>
@@ -374,7 +374,7 @@
 
                     <tbody ng-if="opRiskScales.impacts.min != opRiskScales.impacts.max && opRiskScales.impacts.max > 0">
                         <tr ng-repeat="i in range(0,opRiskImpactScales[0].comments.length - 1)" edit-model="opRiskImpactScales">
-                            <th edit-readonly="isAnrReadOnly"
+                            <th edit-readonly="isStructureReadOnly"
                                 edit-canchange="scalesCanChange"
                                 edit-field="scaleValue"
                                 edit-min="{{opRiskImpactScales[0].comments[i - 1] ? opRiskImpactScales[0].comments[i - 1].scaleValue + 1 : 0}}"
@@ -384,7 +384,7 @@
                             </th>
                             <td
                                 class="preserve-newlines"
-                                edit-readonly="isAnrReadOnly"
+                                edit-readonly="isStructureReadOnly"
                                 ng-show="!scale.isHidden || display.show_hidden_opRisks_impacts"
                                 edit-field="comment"
                                 ng-repeat="scale in opRiskImpactScales"
@@ -399,7 +399,7 @@
             <div editable callback="onOpRiskLikelihoodScaleChanged" layout="row">
                 <h4 edit-model="opRiskScales.threats"><span translate>Likelihood scale:</span> [
                   <span class="text-blue"
-                        edit-readonly="isAnrReadOnly"
+                        edit-readonly="isStructureReadOnly"
                         edit-canchange="scalesCanChange"
                         edit-min="0"
                         edit-max="{{opRiskScales.threats.max - 1}}"
@@ -407,7 +407,7 @@
                         edit-type="number">
                   </span> -
                   <span class="text-blue"
-                        edit-readonly="isAnrReadOnly"
+                        edit-readonly="isStructureReadOnly"
                         edit-canchange="scalesCanChange"
                         edit-min="{{opRiskScales.threats.min + 1}}"
                         edit-max="20"
@@ -424,7 +424,7 @@
                     <li ng-repeat="comment in opRiskLikelihoodScale.comments" edit-model="comment">{{comment.scaleValue}}.
                         <span
                             edit-field="comment"
-                            edit-readonly="isAnrReadOnly"
+                            edit-readonly="isStructureReadOnly"
                             edit-type="textarea"
                             edit-class="preserve-newlines"
                             edit-placeholder="{{ 'Click here to type...' | translate }}">
@@ -440,7 +440,7 @@
                         <div layout="row" layout-align="start center">
                             <div class="anr-scales-demo-block green"></div>
                             <md-input-container>
-                                <input ng-disabled="isAnrReadOnly"
+                                <input ng-disabled="isStructureReadOnly"
                                     type="number"
                                     name="rolf_thresholds_min"
                                     min="0"
@@ -461,7 +461,7 @@
                         <div layout="row" layout-align="start center">
                             <div class="anr-scales-demo-block orange"></div>
                             <md-input-container>
-                                <input ng-disabled="isAnrReadOnly"
+                                <input ng-disabled="isStructureReadOnly"
                                     type="number"
                                     name="rolf_thresholds_max"
                                     min="{{ thresholds.rolf_thresholds.min }}"
@@ -537,7 +537,7 @@
                 <h4 edit-model="soaScale.levels">
                     <span translate>Compliance scale:</span>&nbsp;
                     <span class="text-blue"
-                        edit-readonly="isAnrReadOnly"
+                        edit-readonly="isStructureReadOnly"
                         edit-min="1"
                         edit-max="20"
                         edit-field="max"
@@ -564,7 +564,7 @@
                         <th>{{scaleComment.scaleIndex}}
                         </th>
                         <td class="preserve-newlines"
-                            edit-readonly="isAnrReadOnly"
+                            edit-readonly="isStructureReadOnly"
                             edit-field="comment"
                             edit-type="textarea"
                             edit-placeholder="{{ 'Click here to type...' | translate }}">
