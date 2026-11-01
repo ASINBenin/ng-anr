@@ -1351,8 +1351,7 @@
 
     $scope.updateShowRolfBrut = function() {
       service = $injector.get('ClientAnrService');
-      anr = angular.copy($scope.model.anr)
-      anr.showRolfBrut = $scope.rolfBrut.show == true ? 1 : 0;
+      anr = {showRolfBrut: $scope.rolfBrut.show == true ? 1 : 0};
       service.patchAnr($scope.model.anr.id, anr, function() {
         $scope.model.showRolfBrut = anr.showRolfBrut;
       });
@@ -6279,12 +6278,14 @@
 
 
     $scope.saveThreat = function(cb) {
-      var copy = angular.copy($scope.currentThreatObj);
-      if (copy.theme) {
-        copy.theme = copy.theme.id;
-      }
+      var threat = $scope.currentThreatObj;
 
-      ThreatService.updateThreat(copy, function() {
+      ThreatService.patchThreat(threat.uuid, {
+        trend: threat.trend,
+        comment: threat.comment,
+        qualification: threat.qualification,
+        forceQualification: threat.forceQualification
+      }, function() {
         toastr.success(gettextCatalog.getString("Threat assessment saved successfully"));
 
         if (cb) {

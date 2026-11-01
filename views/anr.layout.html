@@ -20,7 +20,7 @@
         <md-card ng-if="OFFICE_MODE == 'FO' && model.anr.campaignLocked == 1">
             <md-card-content style="display: flex; align-items: center; justify-content: flex-start">
                 <md-icon style="margin: 0 12px 0 0">lock</md-icon>
-                <span ng-if="model.anr.campaignClosed != 1" translate>This analysis belongs to a campaign: only the evaluations (risks, consequences, recommendations) can be modified.</span>
+                <span ng-if="model.anr.campaignClosed != 1" translate>This analysis belongs to a campaign: the scales, the knowledge base and the tree of the model cannot be modified.</span>
                 <span ng-if="model.anr.campaignClosed == 1" translate>The campaign is closed: this analysis can no longer be modified.</span>
             </md-card-content>
         </md-card>

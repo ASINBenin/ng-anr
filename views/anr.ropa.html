@@ -21,7 +21,7 @@
                     </md-menu-item>
                 </md-menu-content>
             </md-menu>
-            <md-button class="md-icon-button md-primary" ng-if="!isStructureReadOnly" ng-disabled="updatingRecords" ng-click="createNewRecord($event)">
+            <md-button class="md-icon-button md-primary" ng-if="!isAnrReadOnly" ng-disabled="updatingRecords" ng-click="createNewRecord($event)">
                 <md-tooltip md-direction="left">
                     {{ 'Add a processing' | translate }}
                 </md-tooltip>
@@ -59,7 +59,7 @@
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
-                    <md-button class="md-icon-button md-warn" ng-if="!isStructureReadOnly && records.items.records.length > 0" ng-click="deleteRecord($event, record.id)">
+                    <md-button class="md-icon-button md-warn" ng-if="!isAnrReadOnly && records.items.records.length > 0" ng-click="deleteRecord($event, record.id)">
                         <md-tooltip md-direction="left">
                             {{ 'Delete processing' | translate }}
                         </md-tooltip>
@@ -74,7 +74,7 @@
                         <tbody edit-model="record">
                             <tr>
                                 <td><b translate>Name</b></td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="label" edit-type="textarea"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="label" edit-type="textarea"></td>
                             </tr>
                             <tr>
                                 <td><b translate>Creation date</b></td>
@@ -86,11 +86,11 @@
                             </tr>
                             <tr>
                                 <td><b translate>Purpose(s)</b></td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="purposes" edit-type="textarea" edit-class="preserve-newlines"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="purposes" edit-type="textarea" edit-class="preserve-newlines"></td>
                             </tr>
                             <tr>
                                 <td style="width:1%; white-space:nowrap"><b translate>Security measures</b></td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="secMeasures" edit-type="textarea" edit-class="preserve-newlines"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="secMeasures" edit-type="textarea" edit-class="preserve-newlines"></td>
                         </tbody>
                     </table>
                 </md-table-container>
@@ -108,12 +108,12 @@
                                 <th translate>Actor</th>
                                 <th translate style="width:30%;">Name</th>
                                 <th translate>Contact</th>
-                                <th ng-if="!isStructureReadOnly" style="width:1%; white-space:nowrap"></th>
+                                <th ng-if="!isAnrReadOnly" style="width:1%; white-space:nowrap"></th>
                             </tr>
                             <tr edit-model="records.items.records[recordIndex].controller" ng-if="!updatingActor">
-                                <td edit-readonly="isStructureReadOnly" style="width:1%; white-space:nowrap"><b translate>Controller</b></td>
-                                <td edit-readonly="isStructureReadOnly">
-                                    <md-autocomplete ng-if="!isStructureReadOnly"
+                                <td edit-readonly="isAnrReadOnly" style="width:1%; white-space:nowrap"><b translate>Controller</b></td>
+                                <td edit-readonly="isAnrReadOnly">
+                                    <md-autocomplete ng-if="!isAnrReadOnly"
                                         class="autocomplete-record-gdpr"
                                         md-selected-item="selectedItemController"
                                         md-search-text="record.controller.label"
@@ -127,12 +127,12 @@
                                             <span md-highlight-text="record.controller.label" md-highlight-flags="^i">{{item['label']}}</span>
                                         </md-item-template>
                                     </md-autocomplete>
-                                    <span ng-if="isStructureReadOnly" md-highlight-text="record.controller.label" md-highlight-flags="^i">{{record.controller.label}}</span>
+                                    <span ng-if="isAnrReadOnly" md-highlight-text="record.controller.label" md-highlight-flags="^i">{{record.controller.label}}</span>
                                 </td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="record.controller.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="record.controller.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
                                 <td ng-if="!record.controller.id"></td>
                                 <td class="txtcenter">
-                                    <md-button ng-if="!isStructureReadOnly && record.controller.id" class="md-icon-button md-warn" ng-click="detachActor(record, 'controller')">
+                                    <md-button ng-if="!isAnrReadOnly && record.controller.id" class="md-icon-button md-warn" ng-click="detachActor(record, 'controller')">
                                         <md-tooltip md-direction="left">
                                             {{ 'Detach controller' | translate }}
                                         </md-tooltip>
@@ -144,8 +144,8 @@
                             </tr>
                             <tr edit-model="records.items.records[recordIndex].dpo" ng-if="!updatingActor">
                                 <td><b translate>Data protection officer</b></td>
-                                <td edit-readonly="isStructureReadOnly">
-                                    <md-autocomplete ng-if="!isStructureReadOnly"
+                                <td edit-readonly="isAnrReadOnly">
+                                    <md-autocomplete ng-if="!isAnrReadOnly"
                                         class="autocomplete-record-gdpr"
                                         md-selected-item="selectedItemDpo"
                                         md-search-text="record.dpo.label"
@@ -160,10 +160,10 @@
                                         </md-item-template>
                                     </md-autocomplete>
                                 </td>
-                                <td edit-readonly="isStructureReadOnly" ng-model="record.dpo.contact" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="record.dpo.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
+                                <td edit-readonly="isAnrReadOnly" ng-model="record.dpo.contact" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="record.dpo.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
                                 <td ng-if="!record.dpo.id"></td>
                                 <td class="txtcenter">
-                                    <md-button ng-if="!isStructureReadOnly && record.dpo.id" class="md-icon-button md-warn"ng-click="detachActor(record, 'dpo')">
+                                    <md-button ng-if="!isAnrReadOnly && record.dpo.id" class="md-icon-button md-warn"ng-click="detachActor(record, 'dpo')">
                                         <md-tooltip md-direction="left">
                                             {{ 'Detach data protection officer' | translate }}
                                         </md-tooltip>
@@ -176,7 +176,7 @@
                             <tr edit-model="records.items.records[recordIndex].representative" ng-if="!updatingActor">
                                 <td><b translate>Representative</b></td>
                                 <td>
-                                    <md-autocomplete ng-if="!isStructureReadOnly"
+                                    <md-autocomplete ng-if="!isAnrReadOnly"
                                         class="autocomplete-record-gdpr"
                                         md-selected-item="selectedItemRepresentative"
                                         md-search-text="record.representative.label"
@@ -191,10 +191,10 @@
                                         </md-item-template>
                                     </md-autocomplete>
                                 </td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="record.representative.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="record.representative.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
                                 <td ng-if="!record.representative.id"></td>
                                 <td class="txtcenter">
-                                    <md-button ng-if="!isStructureReadOnly && record.representative.id" class="md-icon-button md-warn"ng-click="detachActor(record, 'representative')">
+                                    <md-button ng-if="!isAnrReadOnly && record.representative.id" class="md-icon-button md-warn"ng-click="detachActor(record, 'representative')">
                                         <md-tooltip md-direction="left">
                                             {{ 'Detach representative' | translate }}
                                         </md-tooltip>
@@ -207,7 +207,7 @@
                             <tr edit-model="record.jointControllers[0]" >
                                 <td>
                                     <span flex><b translate>Joint controllers</b></span>
-                                    <md-button ng-if="!isStructureReadOnly" class="md-icon-button md-primary" ng-click="addJointControllers(record)">
+                                    <md-button ng-if="!isAnrReadOnly" class="md-icon-button md-primary" ng-click="addJointControllers(record)">
                                         <md-tooltip md-direction="left">
                                             {{ 'Add a joint controller' | translate }}
                                         </md-tooltip>
@@ -215,7 +215,7 @@
                                     </md-button>
                                 </td>
                                 <td>
-                                    <md-autocomplete ng-if="!isStructureReadOnly && record.jointControllers.length > 0"
+                                    <md-autocomplete ng-if="!isAnrReadOnly && record.jointControllers.length > 0"
                                         class="autocomplete-record-gdpr"
                                         md-selected-item="selectedJointController"
                                         md-search-text="record.jointControllers[0].label"
@@ -230,10 +230,10 @@
                                         </md-item-template>
                                     </md-autocomplete>
                                 </td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="record.jointControllers[0].id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="record.jointControllers[0].id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
                                 <td ng-if="!record.jointControllers[0].id"></td>
                                 <td class="txtcenter">
-                                    <md-button ng-if="!isStructureReadOnly && record.jointControllers[0].id" class="md-icon-button md-warn"ng-click="detachActor(record, 'jointControllers', 0)">
+                                    <md-button ng-if="!isAnrReadOnly && record.jointControllers[0].id" class="md-icon-button md-warn"ng-click="detachActor(record, 'jointControllers', 0)">
                                         <md-tooltip md-direction="left">
                                             {{ 'Detach joint controller' | translate }}
                                         </md-tooltip>
@@ -261,10 +261,10 @@
                                         </md-item-template>
                                     </md-autocomplete>
                                 </td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="jc.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="jc.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
                                 <td ng-if="!jc.id"></td>
                                 <td class="txtcenter">
-                                    <md-button ng-if="!isStructureReadOnly && record.jointControllers[$index+1].id" class="md-icon-button md-warn"ng-click="detachActor(record, 'jointControllers', $index+1)">
+                                    <md-button ng-if="!isAnrReadOnly && record.jointControllers[$index+1].id" class="md-icon-button md-warn"ng-click="detachActor(record, 'jointControllers', $index+1)">
                                         <md-tooltip md-direction="left">
                                             {{ 'Detach joint controller' | translate }}
                                         </md-tooltip>
@@ -282,7 +282,7 @@
             <div layout="row" layout-align="space-between center">
                 <div layout="row" layout-align="start center">
                     <h3 class="md-padding-left" translate>Categories of data subjects and personal data</h3>
-                    <md-button ng-if="!isStructureReadOnly" class="md-icon-button md-primary" ng-click="addPersonalData(record)" ng-hide="uiState.hidePersonalData">
+                    <md-button ng-if="!isAnrReadOnly" class="md-icon-button md-primary" ng-click="addPersonalData(record)" ng-hide="uiState.hidePersonalData">
                         <md-tooltip md-direction="left">
                             {{ 'Add a category of data subjects and personal data' | translate }}
                         </md-tooltip>
@@ -301,18 +301,18 @@
                                 <th translate style="width:25%">Description</th>
                                 <th translate style="width:15%">Duration of data retention</th>
                                 <th translate style="width:20%">Description of retention period</th>
-                                <th ng-if="!isStructureReadOnly" style="width:1%; white-space:nowrap"></th>
+                                <th ng-if="!isAnrReadOnly" style="width:1%; white-space:nowrap"></th>
                             </tr>
                             <tr ng-repeat="(personalDataIndex, personalData) in record.personalData" edit-model="personalData" ng-if="!(updatingPersonalData)">
-                                <td edit-readonly="isStructureReadOnly" edit-field="dataSubject" edit-type="textarea" edit-class="preserve-newlines" style="word-wrap:break-word;"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="dataSubject" edit-type="textarea" edit-class="preserve-newlines" style="word-wrap:break-word;"></td>
                                 <td>
-                                    <md-chips readonly="isStructureReadOnly" class="chips-horizontal md-chips-table"
+                                    <md-chips readonly="isAnrReadOnly" class="chips-horizontal md-chips-table"
                                         md-on-remove="onPersonalDataEdit(record, personalData, personalDataIndex)"
                                         md-on-add="onPersonalDataEdit(record, personalData, personalDataIndex)"
                                         md-transform-chip="transformChip($chip)"
                                         ng-model="personalData.dataCategories"
                                         md-autocomplete-snap flex>
-                                        <md-autocomplete ng-if="!isStructureReadOnly" md-selected-item="selectedDataCategory"
+                                        <md-autocomplete ng-if="!isAnrReadOnly" md-selected-item="selectedDataCategory"
                                                          md-search-text="dataCategorySearchText"
                                                          md-items="item in queryRecordDataCategorySearch(dataCategorySearchText, personalData)"
                                                          md-item-text="item['label']"
@@ -337,25 +337,25 @@
                                          </md-not-found>
                                     </md-chips>
                                 </td>
-                                <td edit-readonly="isStructureReadOnly || !personalData.id" edit-field="description" edit-type="textarea" ng-disabled="!personalData.id" edit-class="preserve-newlines"  style="word-wrap:break-word;"></td>
+                                <td edit-readonly="isAnrReadOnly || !personalData.id" edit-field="description" edit-type="textarea" ng-disabled="!personalData.id" edit-class="preserve-newlines"  style="word-wrap:break-word;"></td>
                                 <td>
-                                    <span ng-if="!isStructureReadOnly">
+                                    <span ng-if="!isAnrReadOnly">
                                         <input type="number" ng-model="personalData.retentionPeriod" min="0" style="width:20%" ng-change="onPersonalDataTableEdited(personalData)" ng-disabled="!personalData.id">
                                     </span>
-                                    <span ng-if="isStructureReadOnly">{{personalData.retentionPeriod}}</span>
-                                    <span ng-if="!isStructureReadOnly" class="select-retention-period-mode">
+                                    <span ng-if="isAnrReadOnly">{{personalData.retentionPeriod}}</span>
+                                    <span ng-if="!isAnrReadOnly" class="select-retention-period-mode">
                                         <md-select ng-model="personalData.retentionPeriodMode" ng-change="onPersonalDataTableEdited(personalData)" ng-disabled="!personalData.id">
                                             <md-option ng-value="0">{{ 'day(s)' | translate }}</md-option>
                                             <md-option ng-value="1">{{ 'month(s)' | translate }}</md-option>
                                             <md-option ng-value="2">{{ 'year(s)' | translate }}</md-option>
                                         </md-select>
                                     </span>
-                                    <span ng-if="isStructureReadOnly && personalData.retentionPeriodMode==0">{{ 'day(s)' | translate }}</span>
-                                    <span ng-if="isStructureReadOnly && personalData.retentionPeriodMode==1">{{ 'month(s)' | translate }}</span>
-                                    <span ng-if="isStructureReadOnly && personalData.retentionPeriodMode==2">{{ 'year(s)' | translate }}</span>
+                                    <span ng-if="isAnrReadOnly && personalData.retentionPeriodMode==0">{{ 'day(s)' | translate }}</span>
+                                    <span ng-if="isAnrReadOnly && personalData.retentionPeriodMode==1">{{ 'month(s)' | translate }}</span>
+                                    <span ng-if="isAnrReadOnly && personalData.retentionPeriodMode==2">{{ 'year(s)' | translate }}</span>
                                 </td>
-                                <td edit-readonly="isStructureReadOnly || !personalData.id" edit-field="retentionPeriodDescription" edit-type="textarea" ng-disabled="!personalData.id" edit-class="preserve-newlines"  style="word-wrap:break-word;"></td>
-                                <td ng-if="!isStructureReadOnly">
+                                <td edit-readonly="isAnrReadOnly || !personalData.id" edit-field="retentionPeriodDescription" edit-type="textarea" ng-disabled="!personalData.id" edit-class="preserve-newlines"  style="word-wrap:break-word;"></td>
+                                <td ng-if="!isAnrReadOnly">
                                     <md-button class="md-icon-button md-warn"ng-click="deletePersonalData(record, personalDataIndex)">
                                         <md-tooltip md-direction="left">
                                             {{ 'Delete personal data' | translate }}
@@ -372,7 +372,7 @@
             <div layout="row" layout-align="space-between center">
                 <div layout="row" layout-align="start center">
                   <h3 class="md-padding-left" translate>Recipients</h3>
-                  <md-button ng-if="!isStructureReadOnly" class="md-icon-button md-primary" ng-click="addRecipient(record)" ng-hide="uiState.hideRecipients">
+                  <md-button ng-if="!isAnrReadOnly" class="md-icon-button md-primary" ng-click="addRecipient(record)" ng-hide="uiState.hideRecipients">
                       <md-tooltip md-direction="left">
                           {{ 'Add a recipient' | translate }}
                       </md-tooltip>
@@ -389,11 +389,11 @@
                                 <th translate style="width:30%;">Recipient</th>
                                 <th translate style="width:1%; white-space:nowrap">Recipient type</th>
                                 <th translate>Description</th>
-                                <th ng-if="!isStructureReadOnly" style="width:1%; white-space:nowrap"></th>
+                                <th ng-if="!isAnrReadOnly" style="width:1%; white-space:nowrap"></th>
                             </tr>
                             <tr ng-repeat="(recipientIndex, recipient) in record.recipients" edit-model="recipient">
                                 <td>
-                                    <md-autocomplete ng-if="!isStructureReadOnly"
+                                    <md-autocomplete ng-if="!isAnrReadOnly"
                                         class="autocomplete-record-gdpr"
                                         md-selected-item="selectedItemRecipient"
                                         md-search-text="recipient.label"
@@ -407,18 +407,18 @@
                                             <span md-highlight-text="recipient.label" md-highlight-flags="^i">{{item['label']}}</span>
                                         </md-item-template>
                                     </md-autocomplete>
-                                    <span ng-if="isStructureReadOnly" md-highlight-text="recipient.label" md-highlight-flags="^i">{{recipient.label}}</span>
+                                    <span ng-if="isAnrReadOnly" md-highlight-text="recipient.label" md-highlight-flags="^i">{{recipient.label}}</span>
                                 </td>
                                 <td>
-                                    <md-select ng-if="!isStructureReadOnly" ng-model="recipient.type" ng-change="onRecipientTableEdited(recipient)">
+                                    <md-select ng-if="!isAnrReadOnly" ng-model="recipient.type" ng-change="onRecipientTableEdited(recipient)">
                                         <md-option ng-value="0">{{ 'Internal' | translate }}</md-option>
                                         <md-option ng-value="1">{{ 'External' | translate }}</md-option>
                                     </md-select>
-                                    <span ng-if="isStructureReadOnly && recipient.type==0" >{{ 'Internal' | translate }}</span>
-                                    <span ng-if="isStructureReadOnly && recipient.type==1" >{{ 'External' | translate }}</span>
+                                    <span ng-if="isAnrReadOnly && recipient.type==0" >{{ 'Internal' | translate }}</span>
+                                    <span ng-if="isAnrReadOnly && recipient.type==1" >{{ 'External' | translate }}</span>
                                 </td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="description" edit-type="textarea" ng-model="recipient.description"></td>
-                                <td ng-if="!isStructureReadOnly">
+                                <td edit-readonly="isAnrReadOnly" edit-field="description" edit-type="textarea" ng-model="recipient.description"></td>
+                                <td ng-if="!isAnrReadOnly">
                                     <md-button class="md-icon-button md-warn"ng-click="deleteRecipient(record, recipientIndex)">
                                         <md-tooltip md-direction="left">
                                             {{ 'Delete recipient' | translate }}
@@ -434,7 +434,7 @@
             <div layout="row" layout-align="space-between center">
               <div layout="row" layout-align="start center">
                 <h3  class="md-padding-left" translate>International transfers</h3>
-                <md-button ng-if="!isStructureReadOnly" class="md-icon-button md-primary" ng-click="addInternationalTransfer(record)" ng-hide="uiState.hideTranfers">
+                <md-button ng-if="!isAnrReadOnly" class="md-icon-button md-primary" ng-click="addInternationalTransfer(record)" ng-hide="uiState.hideTranfers">
                     <md-tooltip md-direction="left">
                         {{ 'Add an international transfer' | translate }}
                     </md-tooltip>
@@ -452,14 +452,14 @@
                                 <th translate>Description</th>
                                 <th translate>Country</th>
                                 <th translate style="width:40%; white-space:nowrap">Documents</th>
-                                <th ng-if="!isStructureReadOnly" style="width:1%; white-space:nowrap"></th>
+                                <th ng-if="!isAnrReadOnly" style="width:1%; white-space:nowrap"></th>
                             </tr>
                             <tr ng-repeat="internationalTransfer in record.internationalTransfers"  edit-model="internationalTransfer">
-                                <td edit-readonly="isStructureReadOnly" edit-field="organisation" edit-type="textarea" class="txtcenter"></td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="description" edit-type="textarea" class="txtcenter"></td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="country" edit-type="textarea" class="txtcenter"></td>
-                                <td edit-readonly="isStructureReadOnly" edit-field="documents" edit-type="textarea" class="txtcenter"></td>
-                                <td ng-if="!isStructureReadOnly">
+                                <td edit-readonly="isAnrReadOnly" edit-field="organisation" edit-type="textarea" class="txtcenter"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="description" edit-type="textarea" class="txtcenter"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="country" edit-type="textarea" class="txtcenter"></td>
+                                <td edit-readonly="isAnrReadOnly" edit-field="documents" edit-type="textarea" class="txtcenter"></td>
+                                <td ng-if="!isAnrReadOnly">
                                     <md-button class="md-icon-button md-warn"ng-click="deleteInternationalTransfer(record, $index)">
                                         <md-tooltip md-direction="left">
                                             {{ 'Delete international transfer' | translate }}
@@ -476,7 +476,7 @@
             <div layout="row" layout-align="space-between center">
                 <div layout="row" layout-align="start center">
                     <h3 class="md-padding-left" translate>Processors</h3>
-                    <md-button class="md-icon-button md-primary" ng-if="!isStructureReadOnly" ng-click="createNewProcessor($event, record)" ng-hide="uiState.hideProcessors">
+                    <md-button class="md-icon-button md-primary" ng-if="!isAnrReadOnly" ng-click="createNewProcessor($event, record)" ng-hide="uiState.hideProcessors">
                         <md-tooltip md-direction="left">
                             {{ 'Add a processor' | translate }}
                         </md-tooltip>
@@ -487,8 +487,8 @@
             </div>
             <div ng-hide="uiState.hideProcessors">
                 <md-tabs class="processor-tabs" md-dynamic-height="true" md-selected="processorTabSelected" ng-if="record.processors.length>0">
-                    <div layout="row" layout-align="end center" class="md-padding-double" style="height:40px" ng-if="!isStructureReadOnly">
-                        <md-button class="md-icon-button md-warn" ng-if="!isStructureReadOnly" ng-click="detachProcessor($event, record, processorTabSelected)">
+                    <div layout="row" layout-align="end center" class="md-padding-double" style="height:40px" ng-if="!isAnrReadOnly">
+                        <md-button class="md-icon-button md-warn" ng-if="!isAnrReadOnly" ng-click="detachProcessor($event, record, processorTabSelected)">
                             <md-tooltip md-direction="left">
                                 {{ 'Detach processor' | translate }}
                             </md-tooltip>
@@ -503,19 +503,19 @@
                                     <tbody edit-model="processor">
                                         <tr>
                                             <td><b translate>Name</b></td>
-                                            <td edit-readonly="isStructureReadOnly" edit-field="label" edit-type="textarea"></td>
+                                            <td edit-readonly="isAnrReadOnly" edit-field="label" edit-type="textarea"></td>
                                         </tr>
                                         <tr>
                                             <td><b translate>Contact</b></td>
-                                            <td edit-readonly="isStructureReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines"></td>
+                                            <td edit-readonly="isAnrReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines"></td>
                                         </tr>
                                         <tr>
                                             <td><b translate>Activity(s)</b></td>
-                                            <td edit-readonly="isStructureReadOnly" edit-field="activities" edit-type="textarea" edit-class="preserve-newlines"></td>
+                                            <td edit-readonly="isAnrReadOnly" edit-field="activities" edit-type="textarea" edit-class="preserve-newlines"></td>
                                         </tr>
                                         <tr>
                                             <td style="width:1%; white-space:nowrap"><b translate>Security measures</b></td>
-                                            <td edit-readonly="isStructureReadOnly" edit-field="secMeasures" edit-type="textarea" edit-class="preserve-newlines"></td>
+                                            <td edit-readonly="isAnrReadOnly" edit-field="secMeasures" edit-type="textarea" edit-class="preserve-newlines"></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -534,11 +534,11 @@
                                             <th translate>Actor</th>
                                             <th translate>Name</th>
                                             <th translate>Contact</th>
-                                            <th ng-if="!isStructureReadOnly" style="width:1%; white-space:nowrap"></th>
+                                            <th ng-if="!isAnrReadOnly" style="width:1%; white-space:nowrap"></th>
                                         <tr edit-model="processor.representative" ng-if="!updatingActor">
                                             <td><b translate>Representative</b></td>
                                             <td style="width:30%;">
-                                                <md-autocomplete ng-if="!isStructureReadOnly"
+                                                <md-autocomplete ng-if="!isAnrReadOnly"
                                                     class="autocomplete-record-gdpr"
                                                     md-selected-item="selectedItemRepresentativeProcessor"
                                                     md-search-text="processor.representative.label"
@@ -552,12 +552,12 @@
                                                         <span md-highlight-text="processor.representative.label" md-highlight-flags="^i">{{item['label']}}</span>
                                                     </md-item-template>
                                                 </md-autocomplete>
-                                                <span ng-if="isStructureReadOnly" md-highlight-text="processor.representative.label" md-highlight-flags="^i">{{processor.representative.label}}</span>
+                                                <span ng-if="isAnrReadOnly" md-highlight-text="processor.representative.label" md-highlight-flags="^i">{{processor.representative.label}}</span>
                                             </td>
-                                            <td edit-readonly="isStructureReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="processor.representative.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
+                                            <td edit-readonly="isAnrReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="processor.representative.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
                                             <td ng-if="!processor.representative.id"></td>
                                             <td class="txtcenter" style="width:1%; white-space:nowrap">
-                                                <md-button ng-if="!isStructureReadOnly && processor.representative.id" class="md-icon-button md-warn"ng-click="processorDetachActor(processor, 'representative')">
+                                                <md-button ng-if="!isAnrReadOnly && processor.representative.id" class="md-icon-button md-warn"ng-click="processorDetachActor(processor, 'representative')">
                                                     <md-tooltip md-direction="left">
                                                         {{ 'Detach representative' | translate }}
                                                     </md-tooltip>
@@ -570,7 +570,7 @@
                                         <tr edit-model="processor.dpo" ng-if="!updatingActor">
                                             <td style="width:1%; white-space:nowrap"><b translate>Data protection officer</b></td>
                                             <td style="width:30%;">
-                                                <md-autocomplete ng-if="!isStructureReadOnly"
+                                                <md-autocomplete ng-if="!isAnrReadOnly"
                                                     class="autocomplete-record-gdpr"
                                                     md-selected-item="selectedItemDpoProcessor"
                                                     md-search-text="processor.dpo.label"
@@ -586,10 +586,10 @@
                                                 </md-autocomplete>
                                             </td>
 
-                                            <td edit-readonly="isStructureReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="processor.dpo.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
+                                            <td edit-readonly="isAnrReadOnly" edit-field="contact" edit-type="textarea" edit-class="preserve-newlines" ng-if="processor.dpo.id" edit-placeholder="{{ 'Address, mail, telephone, ...' | translate }}"></td>
                                             <td ng-if="!processor.dpo.id"></td>
                                             <td class="txtcenter">
-                                                <md-button ng-if="!isStructureReadOnly && processor.dpo.id" class="md-icon-button md-warn"ng-click="processorDetachActor(processor, 'dpo')">
+                                                <md-button ng-if="!isAnrReadOnly && processor.dpo.id" class="md-icon-button md-warn"ng-click="processorDetachActor(processor, 'dpo')">
                                                     <md-tooltip md-direction="left">
                                                         {{ 'Detach data protection officer' | translate }}
                                                     </md-tooltip>
