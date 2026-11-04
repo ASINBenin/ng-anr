@@ -1898,7 +1898,6 @@
         }
       }
       $scope.reducAmount = reducAmount;
-      $scope._copyRecs = [];
       if ($scope.OFFICE_MODE == 'FO') {
         $scope.idxRisks = risks.findIndex(infoRisk => infoRisk.id == $stateParams.riskId);
         $scope.updateRiskSheetNavigationContextIndex('information', risk.id);
@@ -1932,7 +1931,6 @@
         }
       });
 
-      $scope._copyRecs = [];
       if ($scope.OFFICE_MODE == 'FO') {
         $scope.initializeRiskReviewFields($scope.opsheet_risk);
         $scope.idxOpRisks = oprisks.findIndex(oprisk => oprisk.id == $stateParams.riskopId);
@@ -3215,10 +3213,6 @@
         $scope.loadRiskHistory(sheet, true);
       });
     };
-
-    $scope.$on('recommendations-loaded', function(ev, recs) {
-      $scope._copyRecs = recs;
-    });
 
     /**
      * Risk analysis
