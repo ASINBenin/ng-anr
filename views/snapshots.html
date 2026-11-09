@@ -47,7 +47,7 @@
                         			</md-tooltip>
                         			<md-icon>visibility</md-icon> 
                         	 </md-button>
-                            <md-button ng-class="{'md-icon-button': confirmRestore != snapshot.id}" ng-disabled="snapshotRestoring" ng-click="restoreSnapshot(snapshot)">
+                            <md-button ng-if="!anr.campaignLocked" ng-class="{'md-icon-button': confirmRestore != snapshot.id}" ng-disabled="snapshotRestoring" ng-click="restoreSnapshot(snapshot)">
 		    							 <md-tooltip md-direction="right">
                             		{{ 'Restore' | translate }}
                         			</md-tooltip>                            

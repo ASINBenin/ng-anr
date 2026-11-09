@@ -22,12 +22,13 @@
                     <md-icon class="material-icons md-48 size-auto" md-menu-origin>more_vert</md-icon>
                 </md-button>
                 <md-menu-content>
-                    <md-menu-item>
+                    <!-- Analyse de campagne : le serveur refuse la modification, l'import et la suppression -->
+                    <md-menu-item ng-if="!model.anr.campaignLocked">
                         <md-button class="md-primary" ng-disabled="isAnrReadOnly" ng-click="editAnrInfo($event)">
                             <md-icon class="md-light-theme material-icons">edit</md-icon><span class="black">{{ 'Edit risk analysis' | translate }}</span>
                         </md-button>
                     </md-menu-item>
-                    <md-menu-item ng-if="model.anr.status == 1">
+                    <md-menu-item ng-if="model.anr.status == 1 && !model.anr.campaignLocked">
                         <md-button class="md-primary" ng-disabled="isAnrReadOnly" ng-click="importInstance($event)">
                             <md-icon class="md-light-theme material-icons">play_for_work</md-icon><span class="black">{{ 'Import a risk analysis' | translate }}</span>
                         </md-button>
@@ -45,7 +46,7 @@
                             <md-icon class="md-light-theme material-icons">call_made</md-icon><span class="black">{{ 'Export the whole risk analysis' | translate }}</span>
                         </md-button>
                     </md-menu-item>
-                    <md-menu-item>
+                    <md-menu-item ng-if="!model.anr.campaignLocked">
                         <md-button class="md-primary md-warn" ng-disabled="isAnrReadOnly" ng-click="deleteAnr($event)">
                             <md-icon class="md-light-theme material-icons">delete</md-icon><span class="black">{{ 'Delete risk analysis' | translate }}</span>
                         </md-button>

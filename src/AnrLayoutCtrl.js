@@ -6309,6 +6309,7 @@
   }
 
   function ToolsSnapshotDialog($scope, $rootScope, $mdDialog, $state, ClientSnapshotService, toastr, gettextCatalog, anr) {
+    $scope.anr = anr;
     var reloadSnapshots = function() {
       ClientSnapshotService.getSnapshots().then(function(data) {
         $scope.snapshots = data.snapshots;
@@ -6935,7 +6936,8 @@
 
       var payload = {
         name: ($scope.form.name || '').trim(),
-        email: ($scope.form.email || '').trim() || null,
+        // Superviseur lié à un compte : le serveur reprend l'email du compte, celui de l'écran n'est pas envoyé
+        email: $scope.isLinkedUserSelected() ? null : (($scope.form.email || '').trim() || null),
         rolePosition: ($scope.form.rolePosition || '').trim() || null,
         linkedUserId: $scope.form.linkedUser ? $scope.form.linkedUser.id : null,
         isActive: !!$scope.form.isActive,

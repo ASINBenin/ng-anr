@@ -79,7 +79,8 @@
             <md-button ng-click="cancel()">
                 {{ 'Cancel' | translate }}
             </md-button>
-            <md-button ng-if="deliverable.format === 'pdf'" 
+            <!-- Seul le rapport final au statut « Final » se signe ; le serveur fait le même contrôle -->
+            <md-button ng-if="deliverable.format === 'pdf' && step.num == 3 && deliverable.status == 1"
                        ng-click="prepareSignature(deliverable)" 
                        ng-disabled="evalContextForm.$error.required" 
                        class="md-primary">

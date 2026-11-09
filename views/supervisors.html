@@ -40,6 +40,8 @@
                                 <span> - {{ item.email }}</span>
                             </md-item-template>
                         </md-autocomplete>
+                        <div class="md-caption" ng-if="isLinkedUserSelected()" translate>Only this user can record the acceptance of the residual risk.</div>
+                        <div class="md-caption" ng-if="!isLinkedUserSelected()" translate>Without a linked account, any analyst can record the decision on behalf of this supervisor.</div>
                     </div>
                     <md-input-container flex="25" flex-sm="40" flex-xs="100">
                         <label translate>Role / position</label>
